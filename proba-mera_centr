@@ -1,5 +1,6 @@
 import networkx as nx
-G = nx.path_graph(4)
+
+G = nx.path_graph(8)
 centrality = nx.eigenvector_centrality_numpy(G)
 for n in centrality:
     print("c(", n, ")=", centrality[n])
