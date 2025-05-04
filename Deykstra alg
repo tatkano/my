@@ -4,7 +4,7 @@ import networkx as nx
 G = nx.Graph()
 
 # Add nodes
-for i in range(1, 6): 
+for i in range(1, 6):
     G.add_node(i)
     i=i+1
 
@@ -18,6 +18,13 @@ G.add_edge(4, 6)
 G.add_edge(1, 5)
 
 nx.draw_spring(G, with_labels = True)
+
+A = [[0, 1, 0, 0, 1, 0], [1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 1, 1], [1, 1, 0, 1, 0, 0], [0, 0, 0, 1, 0, 0]]
+
+for i in range(len(A)): 
+    for j in range(len(A[i])): 
+        print(a[i][j], end=' ')
+    print()
 
 for i in range(1, 6):
     minDist = 100
