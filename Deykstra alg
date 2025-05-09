@@ -59,3 +59,18 @@ while minDlina < INF:
 
 for i in range(len(A)):
     print(f'Кратчайший путь из вершины 1 до вершины {i+1} равен {dlina[i]}')
+print()
+
+# в результате заполняется матрица, где элементами являются кратчайшие расстояния между вершинами - алгоритм Флойда-Уоршелла
+for k in range(N):
+    for i in range(N):
+        for j in range(N):
+            if A[i][k]+A[k][j] < A[i][j]:
+                A[i][j] = A[i][k]+A[k][j]
+
+print(f'Матрица, содержащая кратчайшие расстояния между вершинами \n')
+
+for i in range(len(A)): 
+    for j in range(len(A[i])): 
+        print(A[i][j], end=' ')
+    print()
