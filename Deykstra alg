@@ -17,30 +17,45 @@ G.add_edge(2, 5)
 G.add_edge(4, 6)
 G.add_edge(1, 5)
 
-nx.draw_spring(G, with_labels = True)
+nx.draw_spring(G, with_labels = True) # здесь можно на примере нарисованного графа понять правильно ли дальше работает программа
 
-A = [[0, 1, 0, 0, 1, 0], [1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 1, 1], [1, 1, 0, 1, 0, 0], [0, 0, 0, 1, 0, 0]]
+INF = 10000 # задаем расстояние равное большому числу - аналог бесконечности, чтобы показать, что между вершинами нету прямой связи
+
+A = [[0, 1, INF, INF, 1, INF], [1, 0, 1, INF, 1, INF], [INF, 1, 0, 1, INF, INF], [INF, INF, 1, 0, 1, 1], [1, 1, INF, 1, 0, INF], [INF, INF, INF, 1, INF, 0]]
+#A = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
+
+# дальше вывожу матрицу, которая конечно не слишком красиво выглядит, так как в ней значения не только нулей и единиц
 
 for i in range(len(A)): 
     for j in range(len(A[i])): 
-        print(a[i][j], end=' ')
+        print(A[i][j], end=' ')
     print()
+print()
 
-for i in range(1, 6):
-    minDist = 100
-    for j in range(1, 6):
-        if G[i, j] < minDist:  
-            minDist = G[i, j]      
-            V = i
+N = 6
 
-"""# Perform depth-first search
-dfs_tree = nx.dfs_tree(G, source=1)
+painted = [False]*N # массив,в который добавляются вершины по принципу проверили их или нет, значения имеют логический тип
+dlina = [INF]*N # в этот массив добавляются длины кратчайших маршрутов
+# первоначальные значения неизвестны, поэтому равны большим числам
 
-# Print the nodes in the DFS tree
-print("DFS tree nodes:", list(dfs_tree.nodes()))"""
+nachalo = 0 # задаем начальную вершину, допустим первая
+dlina[nachalo] = 0 # первоначальное расстояние от вершины до самой себя
 
-# Find the shortest path using Dijkstra's algorithm
-shortest_path = nx.shortest_path(G, source=1, target=5)
+B = nachalo # номер начальной вершины записывается в переменную B
+minDlina = 0 # начальное значение кратчайшего расстояния
 
-# Print the shortest path
-print("Shortest path:", shortest_path)
+while minDlina < INF:
+    painted[B] = True
+ # проверяем можно ли уменьшить длину пути через вершину B, если длина по новому пути меньше, то переприсваиваем значение
+    for j in range(N):
+        if dlina[B]+A[B][j] < dlina[j]:
+            dlina[j] = dlina[B] + A[B][j]
+ # поиск следующей наиболее оптимальной, еще не выбранной вершины, где расстояние от заданной вершины минимально
+    minDlina = 1e10  # берем еще большее число по сравнению с INF
+    for j in range(N):
+        if not painted[j] and dlina[j] < minDlina:
+            minDlina = dlina[j]
+            B = j
+
+for i in range(len(A)):
+    print(f'Кратчайший путь из вершины 1 до вершины {i+1} равен {dlina[i]}')
